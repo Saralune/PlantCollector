@@ -8,13 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
+  @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive]
+  
     var body: some View {
-        VStack {
-          PlantView(plant: previewPlantImpatiens)
-          PlantView(plant: previewPlantOrchidee)
-          PlantView(plant: previewPlantSensitive)
-        }
-        .padding()
+      PlanCollectionView(myPlantCollection: myPlantCollection)
     }
 }
 

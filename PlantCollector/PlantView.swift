@@ -6,13 +6,14 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct PlantView: View {
   @State var plant: Plant
   
   var body: some View {
     HStack (alignment: .center){
-      Image(plant.image)
+      Image(uiImage: plant.image)
         .resizable()
         .frame(width: 100, height: 150)
         .scaledToFill() // utile ?

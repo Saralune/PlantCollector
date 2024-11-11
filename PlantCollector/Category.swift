@@ -14,6 +14,7 @@ struct Category : Identifiable {
   let description: String
   let color: Color
 }
+let previewCatArray = [previewCatInt, previewCatExt, previewCatSeed]
 
 let previewCatInt = Category(name: "Intérieur", description: "Pour les plantes d'interieur", color: .blue)
 let previewCatExt = Category(name: "Extérieur", description: "Pour les plantes d'extérieur", color: .yellow)
