@@ -20,8 +20,9 @@ struct Plant : Identifiable {
   let temperatureMax: Int
   let isSeed: Bool
   let isCutting: Bool
+  let price: Double
 }
 
-let previewPlantImpatiens = Plant(name: "Impatiens 1", provenance: "Bouture de Lagardelle", category: previewCatInt, image: "", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 10, temperatureMax: 25, isSeed: false, isCutting: true)
-let previewPlantOrchidee = Plant(name: "Orchidée", provenance: "Orchidée maman", category: previewCatInt, image: "", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 10, temperatureMax: 25, isSeed: false, isCutting: false)
-let previewPlantSensitive = Plant(name: "Sensistive", provenance: "Graines de la ferme Sainte Marthe", category: previewCatInt, image: "", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 20, temperatureMax: 25, isSeed: true, isCutting: false)
+let previewPlantImpatiens = Plant(name: "Impatiens 1", provenance: "Bouture de Lagardelle", category: previewCatInt, image: "Impatiens1", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 10, temperatureMax: 25, isSeed: false, isCutting: true, price: 0)
+let previewPlantOrchidee = Plant(name: "Orchidée", provenance: "Orchidée maman", category: previewCatInt, image: "orchidee", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 10, temperatureMax: 25, isSeed: false, isCutting: false, price: 0)
+let previewPlantSensitive = Plant(name: "Sensitive", provenance: "Graines de la ferme Sainte Marthe", category: previewCatInt, image: "sensitive", date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 20, temperatureMax: 25, isSeed: true, isCutting: false, price: 0)
