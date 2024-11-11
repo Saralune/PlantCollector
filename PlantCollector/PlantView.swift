@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct PlantView: View {
-  @State var category: Category
   @State var plant: Plant
   
   var body: some View {
@@ -31,7 +30,7 @@ struct PlantView: View {
         
         Text("Category")
           .padding(7)
-          .background(category.color.opacity(0.6))
+          .background(plant.category.color.opacity(0.6))
           .clipShape(RoundedRectangle(cornerRadius: 10))
           .foregroundColor(.white)
           .bold()
@@ -44,5 +43,5 @@ struct PlantView: View {
 }
 
 #Preview {
-  PlantView(category: previewCatInt, plant: previewPlantImpatiens)
+  PlantView(plant: previewPlantImpatiens)
 }

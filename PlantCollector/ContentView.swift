@@ -10,9 +10,9 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-          PlantView(category: previewCatInt, plant: previewPlantImpatiens)
-          PlantView(category: previewCatExt, plant: previewPlantOrchidee)
-          PlantView(category: previewCatSemis, plant: previewPlantSensitive)
+          PlantView(plant: previewPlantImpatiens)
+          PlantView(plant: previewPlantOrchidee)
+          PlantView(plant: previewPlantSensitive)
         }
         .padding()
     }

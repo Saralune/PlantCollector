@@ -17,4 +17,4 @@ struct Category : Identifiable {
 
 let previewCatInt = Category(name: "Intérieur", description: "Pour les plantes d'interieur", color: .blue)
 let previewCatExt = Category(name: "Extérieur", description: "Pour les plantes d'extérieur", color: .yellow)
-let previewCatSemis = Category(name: "Semis", description: "Bah les semis quoi", color: .green)
+let previewCatSeed = Category(name: "Semis", description: "Bah les semis quoi", color: .green)
