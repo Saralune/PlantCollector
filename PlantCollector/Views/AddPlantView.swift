@@ -14,20 +14,18 @@ struct AddPlantView: View {
   @State var pickedPhoto:  PhotosPickerItem? = nil
   @State var selectedImage = UIImage()
   
-  @State private var selectedCat: String = ""
-  
-  @State private var name: String = "" //
-  @State private var provenance: String = "" //
-  @State private var category: Category = Category(name: "", description: "", color: Color.white)
-  @State private var image = UIImage() //
-  @State private var date: Date = Date() //
+  @State private var name: String = ""
+  @State private var provenance: String = ""
+  @State private var category: Category = previewCatDefault
+  @State private var image = UIImage()
+  @State private var date: Date = Date()
   @State private var sunLevel: Int = 0
   @State private var waterFrequency: Int = 0
-  @State private var temperatureMin: Int = 0 //
-  @State private var temperatureMax: Int = 0 //
-  @State private var isSeed: Bool = false //
-  @State private var isCutting: Bool = false //
-  @State private var price: Double = 0 //
+  @State private var temperatureMin: Int = 0
+  @State private var temperatureMax: Int = 0
+  @State private var isSeed: Bool = false
+  @State private var isCutting: Bool = false
+  @State private var price: Double = 0
   
   var body: some View {
     ScrollView{
@@ -71,30 +69,20 @@ struct AddPlantView: View {
         DatePicker("Date", selection: $date, displayedComponents: .date)
         
         // Ensoleillement
-//        HStack{
-//          Text("Ensoleillement")
-//          Spacer()
-//          ForEach(0 ..< 5) {_ in
-//            Image(systemName: "sun.max")
-//              .onTapGesture {
-//                
-//              }
-//          }
-//        }
-//        .padding([.bottom, .top], 10)
+        HStack{
+          Text("Ensoleillement")
+          Spacer()
+          RatingView(rating: $sunLevel, ratingImageName: "sun.max")
+        }
+        .padding([.bottom, .top], 10)
         
         // Arrosage
-//        HStack{
-//          Text("Arrosage")
-//          Spacer()
-//          ForEach(0 ..< 5) {_ in
-//            Image(systemName: "drop")
-//              .onTapGesture {
-//                
-//              }
-//          }
-//        }
-//        .padding(.bottom, 10)
+        HStack{
+          Text("Arrosage")
+          Spacer()
+          RatingView(rating: $waterFrequency, ratingImageName: "drop")
+        }
+        .padding(.bottom, 10)
         
         // Température Max
         HStack{
@@ -135,13 +123,15 @@ struct AddPlantView: View {
         }
         
         // Catégorie
-//        Picker("Catégorie", selection: $category) {
-//            ForEach(previewCatArray) { cat in
-//              Text(cat.name).tag(cat.name)
-//            }
-//          }.pickerStyle(.menu)
-          
-//        }
+        HStack{
+          Text("Catégorie")
+          Spacer()
+          Picker("Catégorie", selection: $category){
+            ForEach(previewCatArray) { cat in
+              Text(cat.name).tag(cat)
+            }
+          }
+        }
         
         // Bouton de sauvegarde
         Button {
