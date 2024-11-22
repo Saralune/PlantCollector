@@ -29,13 +29,17 @@ struct PlantView: View {
           .font(.caption)
           .fontWeight(.light)
         
-        Text("Category")
-          .padding(7)
-          .background(plant.category.color.opacity(0.6))
-          .clipShape(RoundedRectangle(cornerRadius: 10))
-          .foregroundColor(.white)
-          .bold()
-          .padding(.top, 20)
+        HStack{
+          ForEach(plant.category) { category in
+            Text(category.name)
+              .padding(7)
+              .background(category.color.opacity(0.6))
+              .clipShape(RoundedRectangle(cornerRadius: 10))
+              .foregroundColor(.white)
+              .bold()
+          }
+        }
+        .padding(.top, 20)
       }
     }
     .frame(maxWidth: .infinity, alignment: .leading)
@@ -44,5 +48,5 @@ struct PlantView: View {
 }
 
 #Preview {
-  PlantView(plant: previewPlantImpatiens)
+  PlantView(plant: previewPlantSensitive)
 }

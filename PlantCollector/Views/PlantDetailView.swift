@@ -34,13 +34,19 @@ struct PlantDetailView: View {
             .frame(width: 200, height: 200)
             .scaledToFill()
             .clipShape(RoundedRectangle(cornerRadius: 20))
-          
+            .padding(.leading)
           
           VStack{
-            Text(plant.date.formatted(date: .complete, time: .omitted))
-//              .environment(\.locale, .init(identifier: "fr_FR"))
+            if(plant.price > 0) {
+              Text("\(plant.price, specifier: "%.2f") €")
+                .font(.headline)
+                .foregroundStyle(.gray)
+            }
+                        
+            Text(plant.date.formatted(date: .numeric, time: .omitted))
               .multilineTextAlignment(.center)
               .padding()
+              .bold()
             
             Divider()
               .padding([.trailing, .leading])
@@ -57,6 +63,10 @@ struct PlantDetailView: View {
         Divider()
           .padding()
         
+        
+        // Températures
+        Text("Température conseillée : \(plant.temperatureMin) - \(plant.temperatureMax)°C")
+        
         // Provenance
         ZStack(alignment: .leading) {
           RoundedRectangle(cornerRadius: 10)
@@ -65,14 +75,28 @@ struct PlantDetailView: View {
           
           Text(plant.provenance)
           
-          .frame(maxWidth: .infinity, alignment: .center)
-          .padding(10)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .padding(10)
         }
         .padding()
         .fixedSize(horizontal: false, vertical: true)
         
-        //
+        // Prix
+        
+        
+        // Graine ou Bouture ?
+        HStack{
+          Image(systemName: plant.isSeed ? "checkmark.square.fill" : "square")
+            .foregroundStyle(Color(red: 0.149, green: 0.569, blue: 0.514))
+          Text("Semis")
           
+          Image(systemName: plant.isCutting ? "checkmark.square.fill" : "square")
+            .foregroundStyle(Color(red: 0.149, green: 0.569, blue: 0.514))
+          Text("Bouture")
+        }
+        
+        // Galerie de photos enregistrées
+        
       }
       .navigationTitle(plant.name)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -80,6 +104,12 @@ struct PlantDetailView: View {
     }
   }
 }
+
+//let temperatureMin: Int
+//let temperatureMax: Int
+//let isSeed: Bool
+//let isCutting: Bool
+//let price: Double
 
 #Preview {
   PlantDetailView(plant: previewPlantImpatiens)

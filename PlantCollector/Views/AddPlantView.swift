@@ -9,14 +9,16 @@ import SwiftUI
 import PhotosUI
 
 struct AddPlantView: View {
-  @Binding var myPlantCollection: [Plant]
   @Environment(\.dismiss) var dismiss
+//  @Environment(\.locale) var locale
+  
+  @Binding var myPlantCollection: [Plant]
   @State var pickedPhoto:  PhotosPickerItem? = nil
   @State var selectedImage = UIImage()
   
   @State private var name: String = ""
   @State private var provenance: String = ""
-  @State private var category: Category = previewCatDefault
+  @State private var category: [Category] = [previewCatDefault]
   @State private var image = UIImage()
   @State private var date: Date = Date()
   @State private var sunLevel: Int = 0
@@ -27,7 +29,11 @@ struct AddPlantView: View {
   @State private var isCutting: Bool = false
   @State private var price: Double = 0
   
+//  let formatter = DateFormatter()
+  
   var body: some View {
+    
+    
     ScrollView{
       VStack {
         //Image choisie
@@ -38,7 +44,7 @@ struct AddPlantView: View {
               .overlay(alignment: .center){
                 Image(systemName: "photo")
               }
-              .frame(width: .infinity, height: 300)
+              .frame(height: 300)
           } else {
             Image(uiImage: selectedImage)
               .resizable()
@@ -72,7 +78,7 @@ struct AddPlantView: View {
         HStack{
           Text("Ensoleillement")
           Spacer()
-          RatingView(rating: $sunLevel, ratingImageName: "sun.max")
+          RatingView(rating: sunLevel, ratingImageName: "sun.max")
         }
         .padding([.bottom, .top], 10)
         
@@ -80,7 +86,7 @@ struct AddPlantView: View {
         HStack{
           Text("Arrosage")
           Spacer()
-          RatingView(rating: $waterFrequency, ratingImageName: "drop")
+          RatingView(rating: waterFrequency, ratingImageName: "drop")
         }
         .padding(.bottom, 10)
         
@@ -92,10 +98,14 @@ struct AddPlantView: View {
           TextField("", value: $temperatureMin, format: .number)
             .textFieldStyle(.roundedBorder)
             .frame(width: 50)
+            .keyboardType(.numberPad)
+
           Text("max")
           TextField("", value: $temperatureMax, format: .number)
             .textFieldStyle(.roundedBorder)
             .frame(width: 50)
+            .keyboardType(.numberPad)
+
         }
         .frame(minWidth: 0, alignment: .leading)
         
@@ -118,6 +128,7 @@ struct AddPlantView: View {
           Text("Prix")
           TextField("", value: $price, format: .number)
             .textFieldStyle(.roundedBorder)
+            .keyboardType(.numberPad)
           Stepper("test", value: $price)
             .labelsHidden()
         }
@@ -126,8 +137,9 @@ struct AddPlantView: View {
         HStack{
           Text("Catégorie")
           Spacer()
+          
           Picker("Catégorie", selection: $category){
-            ForEach(previewCatArray) { cat in
+            ForEach(previewCatArray, id: \.self) { cat in
               Text(cat.name).tag(cat)
             }
           }
@@ -151,7 +163,16 @@ struct AddPlantView: View {
     }
   }
   
+//  private func dateFormatter(){
+//    let formatter = DateFormatter()
+//    formatter.locale = Locale(identifier: "fr")
+//    formatter.setLocalizedDateFormatFromTemplate("dd MMMM YYYY")
+//    formatter.string(from: date)
+//  }
+  
   private func savePlant() {
+//    dateFormatter()
+    
     let newPlant = Plant(name: name, provenance: provenance, category: category, image: image, date: date, sunLevel: sunLevel, waterFrequency: waterFrequency, temperatureMin: temperatureMin, temperatureMax: temperatureMax, isSeed: isSeed, isCutting: isCutting, price: price)
     myPlantCollection.append(newPlant)
     dismiss() // Quitter l'écran automatiquement
