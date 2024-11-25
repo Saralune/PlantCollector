@@ -10,6 +10,7 @@ import SwiftUI
 struct PlantDetailView: View {
   @Environment(\.dismiss) var dismiss
   @State var plant: Plant
+  @State var isShowingUpdateScreen = false
   
   var body: some View {
     NavigationStack {
@@ -42,7 +43,7 @@ struct PlantDetailView: View {
                 .font(.headline)
                 .foregroundStyle(.gray)
             }
-                        
+            
             Text(plant.date.formatted(date: .numeric, time: .omitted))
               .multilineTextAlignment(.center)
               .padding()
@@ -52,10 +53,10 @@ struct PlantDetailView: View {
               .padding([.trailing, .leading])
             
             // Ensoleillement & arrosage
-            RatingView(rating: plant.sunLevel, ratingImageName: "sun.max")
+            RatingView(rating: .constant(plant.sunLevel), ratingImageName: "sun.max") // TODO : vérifier si ok quand page de modification créée
               .padding(5)
             
-            RatingView(rating: plant.waterFrequency, ratingImageName: "drop")
+            RatingView(rating: .constant(plant.waterFrequency), ratingImageName: "drop") // TODO : vérifier si ok quand page de modification créée
               .padding(5)
           }
         }
@@ -100,16 +101,22 @@ struct PlantDetailView: View {
       }
       .navigationTitle(plant.name)
       .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-      
-    }
+      .navigationBarBackButtonHidden(false)
+      .toolbar{
+        ToolbarItem(placement: .topBarTrailing) {
+                Button("Modifier") {
+                  isShowingUpdateScreen = true
+                }
+            }
+      }
+      .sheet(isPresented: $isShowingUpdateScreen){
+        UpdatePlantview()
+      }
+    } //NavigationStack
+    
+    
   }
 }
-
-//let temperatureMin: Int
-//let temperatureMax: Int
-//let isSeed: Bool
-//let isCutting: Bool
-//let price: Double
 
 #Preview {
   PlantDetailView(plant: previewPlantImpatiens)
