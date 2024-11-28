@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RatingView: View {
-  @State var rating: Int
+  @Binding var rating: Int
   var ratingImageName: String
   
   var label = ""
@@ -23,23 +23,23 @@ struct RatingView: View {
   var onColorYellow = Color.yellow
   var onColorBlue = Color.blue
   
-    var body: some View {
-      HStack{
-        if !label.isEmpty {
-           Text(label)
-        }
-        
-        ForEach(1..<maxRating + 1, id: \.self) { number in
-                Button {
-                    rating = number
-                } label: {
-                    image(for: number)
-                        .foregroundStyle(number > rating ? offColor : chooseColor())
-                }
-            }
+  var body: some View {
+    HStack{
+      if !label.isEmpty {
+        Text(label)
       }
-      .buttonStyle(.plain)
+      
+      ForEach(1..<maxRating + 1, id: \.self) { number in
+        Button {
+          rating = number
+        } label: {
+          image(for: number)
+            .foregroundStyle(number > rating ? offColor : chooseColor())
+        }
+      }
     }
+    .buttonStyle(.plain)
+  }
   
   func image(for number:Int) -> Image {
     if number > rating {
@@ -51,7 +51,7 @@ struct RatingView: View {
   
   func chooseColor() -> Color {
     switch ratingImageName{
-//    case "sun": return Color.yellow
+      //    case "sun": return Color.yellow
     case "drop":
       return Color.blue
     default:
@@ -62,5 +62,5 @@ struct RatingView: View {
 }
 
 #Preview {
-  RatingView(rating: 1, ratingImageName: "drop")
+  RatingView(rating: .constant(1), ratingImageName: "drop")
 }

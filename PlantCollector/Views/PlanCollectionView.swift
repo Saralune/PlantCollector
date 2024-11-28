@@ -11,36 +11,14 @@ import SwiftUI
 struct PlanCollectionView: View {
   @State var isShowingAddPlantScreen = false
   @State private var searchText = ""
-  @State private var searchCat: [Category] = previewCatArray
+  @State private var searchCat: Set<Category> = []//previewCategories
   
   @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive]
   
   var body: some View {
     NavigationStack {
-      HStack{
-        
-        // Recherche sur les boutons des catégories
-        ForEach(previewCatArray){ cat in
-          Button(action: {
-            if(searchCat.contains(cat)){
-              searchCat.remove(at: searchCat.firstIndex(of: cat) ?? -1)
-            } else {
-              searchCat.append(cat)
-            }
-          }) {
-            Text(cat.name).tag(cat)
-              .padding(7)
-            //              .background(isBtnSelected ? cat.color.opacity(0.3) : cat.color.opacity(0.8))
-              .background( cat.color.opacity(0.8))
-              .clipShape(RoundedRectangle(cornerRadius: 8))
-              .bold()
-              .foregroundStyle(.white)
-          }
-          //          .buttonStyle(PlainButtonStyle())
-          .buttonStyle(.plain)
-          //          .buttonStyle(PressedButtonCategoryStyle(cat: cat))
-        }
-      }
+      // Recherche sur les boutons des catégories
+      SearchCategoryView(selection: $searchCat)
       
       // PlantView()
       if myPlantCollection.isEmpty {
@@ -85,23 +63,25 @@ struct PlanCollectionView: View {
   // Résultats de la recherche
   var searchResults: [Plant] {
     if searchText.isEmpty {
-      return myPlantCollection
+      if(searchCat.isEmpty){
+        return myPlantCollection
+      } else {
+        return myPlantCollection.filter {
+          $0.category.contains(searchCat)
+        }
+      }
     } else {
-      return myPlantCollection.filter {
-        $0.name.contains(searchText)
+      if(searchCat.isEmpty){
+        return myPlantCollection.filter {
+          $0.name.contains(searchText)
+        }
+      } else {
+        return myPlantCollection.filter {
+          $0.name.contains(searchText) && $0.category.contains(searchCat)
+        }
       }
     }
   }
-  
-//  var searchCategoryResults: [Plant] {
-//    if searchCat.isEmpty {
-//      return myPlantCollection
-//    } else {
-//      return myPlantCollection.filter { $0.category.contains(where: { previewCatArray.contains($0) }) // à modifier en catégorie et boucler sur searchCat
-//        //        $0.category.contains(searchCat)
-//      }
-//    }
-//  }
 }
 
 #Preview {

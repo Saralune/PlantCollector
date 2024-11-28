@@ -10,7 +10,6 @@ import PhotosUI
 
 struct AddPlantView: View {
   @Environment(\.dismiss) var dismiss
-//  @Environment(\.locale) var locale
   
   @Binding var myPlantCollection: [Plant]
   @State var pickedPhoto:  PhotosPickerItem? = nil
@@ -18,7 +17,7 @@ struct AddPlantView: View {
   
   @State private var name: String = ""
   @State private var provenance: String = ""
-  @State private var category: [Category] = [previewCatDefault]
+  @State private var category = Set<Category>()
   @State private var image = UIImage()
   @State private var date: Date = Date()
   @State private var sunLevel: Int = 0
@@ -28,9 +27,7 @@ struct AddPlantView: View {
   @State private var isSeed: Bool = false
   @State private var isCutting: Bool = false
   @State private var price: Double = 0
-  
-//  let formatter = DateFormatter()
-  
+    
   var body: some View {
     
     
@@ -78,7 +75,7 @@ struct AddPlantView: View {
         HStack{
           Text("Ensoleillement")
           Spacer()
-          RatingView(rating: sunLevel, ratingImageName: "sun.max")
+          RatingView(rating: $sunLevel, ratingImageName: "sun.max")
         }
         .padding([.bottom, .top], 10)
         
@@ -86,7 +83,7 @@ struct AddPlantView: View {
         HStack{
           Text("Arrosage")
           Spacer()
-          RatingView(rating: waterFrequency, ratingImageName: "drop")
+          RatingView(rating: $waterFrequency, ratingImageName: "drop")
         }
         .padding(.bottom, 10)
         
@@ -134,14 +131,10 @@ struct AddPlantView: View {
         }
         
         // Catégorie
-        HStack{
-          Text("Catégorie")
-          Spacer()
-          
-          Picker("Catégorie", selection: $category){
-            ForEach(previewCatArray, id: \.self) { cat in
-              Text(cat.name).tag(cat)
-            }
+        VStack{
+          Text("Catégories")
+          HStack{
+            SearchCategoryView(selection: $category)
           }
         }
         
@@ -162,17 +155,8 @@ struct AddPlantView: View {
       .padding()
     }
   }
-  
-//  private func dateFormatter(){
-//    let formatter = DateFormatter()
-//    formatter.locale = Locale(identifier: "fr")
-//    formatter.setLocalizedDateFormatFromTemplate("dd MMMM YYYY")
-//    formatter.string(from: date)
-//  }
-  
+
   private func savePlant() {
-//    dateFormatter()
-    
     let newPlant = Plant(name: name, provenance: provenance, category: category, image: image, date: date, sunLevel: sunLevel, waterFrequency: waterFrequency, temperatureMin: temperatureMin, temperatureMax: temperatureMax, isSeed: isSeed, isCutting: isCutting, price: price)
     myPlantCollection.append(newPlant)
     dismiss() // Quitter l'écran automatiquement

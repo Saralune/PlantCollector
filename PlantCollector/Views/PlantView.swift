@@ -30,7 +30,7 @@ struct PlantView: View {
           .fontWeight(.light)
         
         HStack{
-          ForEach(plant.category) { category in
+          ForEach(Array(plant.category)) { category in
             Text(category.name)
               .padding(7)
               .background(category.color.opacity(0.6))

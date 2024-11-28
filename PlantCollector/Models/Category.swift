@@ -20,4 +20,5 @@ let previewCatExt = Category(name: "Extérieur", description: "Pour les plantes 
 let previewCatSeed = Category(name: "Semis", description: "Bah les semis quoi", color: .green)
 let previewCatDefault = Category(name: "Catégorie", description: "Catégorie par défaut", color: .orange)
 
-let previewCatArray = [previewCatInt, previewCatExt, previewCatSeed]
+//let previewCatArray = [previewCatInt, previewCatExt, previewCatSeed]
+let previewCategories: Set = [previewCatInt, previewCatExt, previewCatSeed]
