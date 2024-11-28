@@ -8,29 +8,16 @@
 import SwiftUI
 import PhotosUI
 
-struct AddPlantView: View {
+struct AddOrUpdatePlantView: View {
   @Environment(\.dismiss) var dismiss
   
   @Binding var myPlantCollection: [Plant]
   @State var pickedPhoto:  PhotosPickerItem? = nil
   @State var selectedImage = UIImage()
-  
-  @State private var name: String = ""
-  @State private var provenance: String = ""
-  @State private var category = Set<Category>()
-  @State private var image: UIImage = UIImage()
-  @State private var date: Date = Date()
-  @State private var sunLevel: Int = 0
-  @State private var waterFrequency: Int = 0
-  @State private var temperatureMin: Int = 0
-  @State private var temperatureMax: Int = 0
-  @State private var isSeed: Bool = false
-  @State private var isCutting: Bool = false
-  @State private var price: Double = 0
+  @Binding var plant: Plant
+  var isCreation: Bool
     
   var body: some View {
-    
-    
     ScrollView{
       VStack {
         //Image choisie
@@ -56,27 +43,27 @@ struct AddPlantView: View {
             if let data = try? await pickedPhoto?
               .loadTransferable(type: Data.self){
               selectedImage = UIImage(data: data)!
-              self.image = selectedImage
+              self.plant.image = selectedImage
             }
           }
         }
         
         // Nom
-        TextField("Nom", text: $name)
+        TextField("Nom", text: $plant.name)
           .textFieldStyle(.roundedBorder)
         
         // Provenance
-        TextField("Provenance", text: $provenance)
+        TextField("Provenance", text: $plant.provenance)
           .textFieldStyle(.roundedBorder)
         
         // Date
-        DatePicker("Date", selection: $date, displayedComponents: .date)
+        DatePicker("Date", selection: $plant.date, displayedComponents: .date)
         
         // Ensoleillement
         HStack{
           Text("Ensoleillement")
           Spacer()
-          RatingView(rating: $sunLevel, ratingImageName: "sun.max")
+          RatingView(rating: $plant.sunLevel, ratingImageName: "sun.max")
         }
         .padding([.bottom, .top], 10)
         
@@ -84,7 +71,7 @@ struct AddPlantView: View {
         HStack{
           Text("Arrosage")
           Spacer()
-          RatingView(rating: $waterFrequency, ratingImageName: "drop")
+          RatingView(rating: $plant.waterFrequency, ratingImageName: "drop")
         }
         .padding(.bottom, 10)
         
@@ -93,13 +80,13 @@ struct AddPlantView: View {
           Text("Température")
           Spacer()
           Text("min")
-          TextField("", value: $temperatureMin, format: .number)
+          TextField("", value: $plant.temperatureMin, format: .number)
             .textFieldStyle(.roundedBorder)
             .frame(width: 50)
             .keyboardType(.numberPad)
 
           Text("max")
-          TextField("", value: $temperatureMax, format: .number)
+          TextField("", value: $plant.temperatureMax, format: .number)
             .textFieldStyle(.roundedBorder)
             .frame(width: 50)
             .keyboardType(.numberPad)
@@ -109,14 +96,14 @@ struct AddPlantView: View {
         
         // Semis ?
         HStack{
-          Toggle(isOn: $isSeed,
+          Toggle(isOn: $plant.isSeed,
                  label: {
             Text("Semis")
           })
         }
         
         // Bouture ?
-        Toggle(isOn: $isCutting,
+        Toggle(isOn: $plant.isCutting,
                label: {
           Text("Bouture")
         })
@@ -124,10 +111,10 @@ struct AddPlantView: View {
         // Prix
         HStack(spacing: 20){
           Text("Prix")
-          TextField("", value: $price, format: .number)
+          TextField("", value: $plant.price, format: .number)
             .textFieldStyle(.roundedBorder)
             .keyboardType(.numberPad)
-          Stepper("test", value: $price)
+          Stepper("test", value: $plant.price)
             .labelsHidden()
         }
         
@@ -135,7 +122,7 @@ struct AddPlantView: View {
         VStack{
           Text("Catégories")
           HStack{
-            SearchCategoryView(selection: $category)
+            SearchCategoryView(selection: $plant.category)
           }
         }
         
@@ -143,7 +130,7 @@ struct AddPlantView: View {
         Button {
           savePlant()
         } label: {
-          Text("Créer")
+          Text(isCreation ? "Créer" : "Modifier")
             .padding()
             .foregroundStyle(.white)
             .bold()
@@ -158,13 +145,15 @@ struct AddPlantView: View {
   }
 
   private func savePlant() {
-    let newPlant = Plant(name: name, provenance: provenance, category: category, image: image, date: date, sunLevel: sunLevel, waterFrequency: waterFrequency, temperatureMin: temperatureMin, temperatureMax: temperatureMax, isSeed: isSeed, isCutting: isCutting, price: price)
-    myPlantCollection.append(newPlant)
+    if(isCreation) {
+      myPlantCollection.append(plant)
+    } 
     dismiss() // Quitter l'écran automatiquement
   }
 }
 
 
 #Preview {
-  AddPlantView(myPlantCollection: .constant([]))
+  AddOrUpdatePlantView(myPlantCollection: .constant([]), plant: .constant(previewPlantOrchidee), isCreation: true)
 }
+

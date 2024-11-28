@@ -9,10 +9,12 @@ import Foundation
 import SwiftUI
 
 struct PlanCollectionView: View {
+  private let isCreation = true
   @State var isShowingAddPlantScreen = false
   @State private var searchText = ""
   @State private var searchCat: Set<Category> = []
   
+  @State private var newPlant: Plant = Plant(name: "", provenance: "", category: previewCategories, image: UIImage(), date: Date(), sunLevel: 0, waterFrequency: 0, temperatureMin: 0, temperatureMax: 0, isSeed: false, isCutting: false, price: 0)
   @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive] //à modifier avec le tableau des plantes créées
   
   var body: some View {
@@ -37,7 +39,7 @@ struct PlanCollectionView: View {
         .listStyle(.plain)
         .navigationTitle("Mes plantes 🪴")
         .sheet(isPresented: $isShowingAddPlantScreen) {
-          AddPlantView(myPlantCollection: $myPlantCollection)
+          AddOrUpdatePlantView(myPlantCollection: $myPlantCollection, plant: $newPlant, isCreation: isCreation)
         }
         .overlay(alignment: .bottomTrailing){
           

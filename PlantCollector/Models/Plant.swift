@@ -10,18 +10,18 @@ import PhotosUI
 
 struct Plant : Identifiable {
   let id  = UUID()
-  let name: String
-  let provenance: String
-  let category: Set<Category>
-  let image: UIImage
-  let date: Date
-  let sunLevel: Int
-  let waterFrequency: Int
-  let temperatureMin: Int
-  let temperatureMax: Int
-  let isSeed: Bool
-  let isCutting: Bool
-  let price: Double
+  var name: String
+  var provenance: String
+  var category: Set<Category>
+  var image: UIImage
+  var date: Date
+  var sunLevel: Int
+  var waterFrequency: Int
+  var temperatureMin: Int
+  var temperatureMax: Int
+  var isSeed: Bool
+  var isCutting: Bool
+  var price: Double
 }
 
 let previewPlantImpatiens = Plant(name: "Impatiens 1", provenance: "Bouture de Lagardelle", category: [previewCatInt], image: UIImage(imageLiteralResourceName: "Impatiens1"), date: Date(), sunLevel: 5, waterFrequency: 2, temperatureMin: 10, temperatureMax: 25, isSeed: false, isCutting: true, price: 0)

@@ -11,6 +11,9 @@ struct PlantDetailView: View {
   @Environment(\.dismiss) var dismiss
   @State var plant: Plant
   @State var isShowingUpdateScreen = false
+  let isCreation = false
+  
+  @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive] //à modifier avec le tableau des plantes créées
   
   var body: some View {
     NavigationStack {
@@ -110,7 +113,7 @@ struct PlantDetailView: View {
             }
       }
       .sheet(isPresented: $isShowingUpdateScreen){
-        UpdatePlantview()
+        AddOrUpdatePlantView(myPlantCollection: $myPlantCollection, plant: $plant, isCreation: isCreation)
       }
     } //NavigationStack
     
