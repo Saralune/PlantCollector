@@ -18,7 +18,7 @@ struct AddPlantView: View {
   @State private var name: String = ""
   @State private var provenance: String = ""
   @State private var category = Set<Category>()
-  @State private var image = UIImage()
+  @State private var image: UIImage = UIImage()
   @State private var date: Date = Date()
   @State private var sunLevel: Int = 0
   @State private var waterFrequency: Int = 0
@@ -56,6 +56,7 @@ struct AddPlantView: View {
             if let data = try? await pickedPhoto?
               .loadTransferable(type: Data.self){
               selectedImage = UIImage(data: data)!
+              self.image = selectedImage
             }
           }
         }

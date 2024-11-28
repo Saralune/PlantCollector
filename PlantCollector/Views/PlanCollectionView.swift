@@ -11,9 +11,9 @@ import SwiftUI
 struct PlanCollectionView: View {
   @State var isShowingAddPlantScreen = false
   @State private var searchText = ""
-  @State private var searchCat: Set<Category> = []//previewCategories
+  @State private var searchCat: Set<Category> = []
   
-  @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive]
+  @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive] //à modifier avec le tableau des plantes créées
   
   var body: some View {
     NavigationStack {
