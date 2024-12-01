@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct PlantCollectorApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
+  @State var myPlantCollection: [Plant] = [previewPlantImpatiens, previewPlantOrchidee, previewPlantSensitive]
+  
+  var body: some Scene {
+    WindowGroup {
+      PlanCollectionView(myPlantCollection: myPlantCollection)
     }
+  }
 }
